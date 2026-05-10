@@ -5,11 +5,17 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Process;
+use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     public function __invoke(): View
+    {
+        return view('dashboard');
+    }
+
+    public function data(): JsonResponse
     {
         $result = Process::path('/tmp')
             ->env(['HOME' => '/home/waygou'])
@@ -31,6 +37,6 @@ class DashboardController extends Controller
             }
         }
 
-        return view('dashboard', compact('data'));
+        return response()->json($data);
     }
 }
